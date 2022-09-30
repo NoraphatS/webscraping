@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "webscraping"
+version = "0.1.0"
+description = ""
+authors = ["NoraphatS <nsuwattananon@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.4.4"
+selenium = "^4.4.3"
+beautifulsoup4 = "^4.11.1"
+requests = "^2.28.1"
+lxml = "^4.9.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
