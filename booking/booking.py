@@ -25,5 +25,5 @@ class Booking(webdriver.Chrome):
         currency_element.click()
         selected_currency_element = self.find_element(By.CSS_SELECTOR, f'a[data-modal-header-async-url-param*="selected_currency={currency}"]')
         selected_currency_element.click()
-
-        
+        # test branch 
+      
