@@ -1,4 +1,5 @@
 from curses import termattrs
+from distutils.command.clean import clean
 import booking.constants as const
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -26,4 +27,51 @@ class Booking(webdriver.Chrome):
         selected_currency_element = self.find_element(By.CSS_SELECTOR, f'a[data-modal-header-async-url-param*="selected_currency={currency}"]')
         selected_currency_element.click()
         # test branch 
-      
+    
+    def select_place_to_go(self, place_to_go):
+        search_filed = self.find_element(By.ID, 'ss')
+        search_filed.clear()
+        search_filed.send_keys(place_to_go)
+
+        first_result = self.find_element(By.CSS_SELECTOR,
+            'li[data-i="0"]'
+        )
+        first_result.click()
+
+    def select_dates(self, check_in_date, check_out_date):
+        check_in_element = self.find_element(By.CSS_SELECTOR,
+            f'td[data-date="{check_in_date}"]'    
+        )
+        check_in_element.click()
+
+        check_out_element = self.find_element(By.CSS_SELECTOR,
+            f'td[data-date="{check_out_date}"]'
+        )
+        check_out_element.click()
+
+    def select_adults(self, count=1):
+        selection_element = self.find_element(By.ID, 'xp__guests__toggle')
+        selection_element.click()
+
+        while True:
+            decrease_adults_element = self.find_element(By.CSS_SELECTOR,
+                'button[aria-label="Decrease number of Adults"]'
+            )
+            decrease_adults_element.click()
+            # If the value of adults reaches 1, then we shoud get out
+            # of the while loop
+            adults_value_element = self.find_element(By.ID, 'group_adults')
+            adults_value = adults_value_element.get_attribute('value')
+
+            if int(adults_value) == 1:
+                break
+
+        increase_button_element = self.find_element(By.CSS_SELECTOR,
+            'button[aria-label="Increase number of Adults"]'
+        )
+        for _ in range(count - 1):
+            increase_button_element.click()
+
+    def click_search(self):
+        search_button = self.find_element(By.CSS_SELECTOR, 'button[type="submit')
+        search_button.click()
